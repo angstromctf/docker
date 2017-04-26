@@ -1,0 +1,11 @@
+limit_req_zone $binary_remote_addr zone=all:10m rate=80r/s;
+
+server {
+    listen 80;
+
+    location / {
+        uwsgi_pass localhost:8080;
+        include uwsgi_params;
+        limit_req zone=all burst=5;
+    }
+}
